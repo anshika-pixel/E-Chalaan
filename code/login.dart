@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../homepage/homepage.dart';
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final formkey = GlobalKey<FormState>();
 
-  String username = '';
+  String id = '';
   String password = '';
 
   Widget build(context) {
@@ -37,7 +39,7 @@ class LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Container(margin: EdgeInsets.only(top: 10.0)),
-                    emailField(),
+                    idField(),
                     Container(margin: EdgeInsets.only(top: 10.0)),
                     passwordField(),
                     Container(margin: EdgeInsets.only(top: 20.0)),
@@ -45,18 +47,35 @@ class LoginPageState extends State<LoginPage> {
                     Container(margin: EdgeInsets.only(top: 40.0)),
                     // forgotPasswordField(),
                     // Container(margin: EdgeInsets.only(top: 20.0)),
-                    // signupLink(),
-                    // Container(margin: EdgeInsets.only(top: 20.0))
+                    onSignup(),
+                    Container(margin: EdgeInsets.only(top: 20.0))
                   ],
                 ),
               ))
         ]));
   }
 
-  Widget emailField() {
+  Widget onSignup() {
+    return TextButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => signupPage()));
+      },
+      child: Text(
+        'Sign up!',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15.0,
+          color: Color.fromARGB(255, 143, 32, 24),
+        ),
+      ),
+    );
+  }
+
+  Widget idField() {
     return TextFormField(
       cursorColor: Colors.black,
-      keyboardType: TextInputType.emailAddress,
+      // keyboardType: TextInputType.,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -68,7 +87,7 @@ class LoginPageState extends State<LoginPage> {
             color: Color.fromARGB(255, 143, 32, 24),
           ),
         ),
-        labelText: 'Username',
+        labelText: 'ID',
         icon: Icon(
           Icons.person_rounded,
           color: Colors.black,
@@ -79,19 +98,19 @@ class LoginPageState extends State<LoginPage> {
           fontWeight: FontWeight.bold,
         ),
         contentPadding: EdgeInsets.only(left: 15.0, right: 15.0),
-        hintText: 'example@pec.edu.in',
+        // hintText: 'example@pec.edu.in',
         // hintStyle: TextStyle(
         //   color: Colors.grey.shade700,
         //   fontSize: 16.0,
         // ),
       ),
       validator: (value) {
-        if (!value!.contains('@pec.edu.in')) {
-          return 'please enter a valid email id!';
+        if (value!.length < 6) {
+          return 'please enter a valid id!';
         }
       },
       onSaved: (value) {
-        username = value!;
+        id = value!;
       },
     );
   }
@@ -140,7 +159,7 @@ class LoginPageState extends State<LoginPage> {
   Widget submitButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Color.fromARGB(255, 143, 32, 24),
+        backgroundColor: Color.fromARGB(255, 143, 32, 24),
         padding: EdgeInsets.all(15.0),
         textStyle: TextStyle(
           color: Colors.white10,
@@ -151,13 +170,13 @@ class LoginPageState extends State<LoginPage> {
       onPressed: () {
         if (formkey.currentState!.validate()) {
           formkey.currentState!.save();
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => homePage()));
-          // print('alldone');
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Home()));
+          print('alldone');
         }
       },
       child: Text('Submit'),
     );
   }
-
 }
+
